@@ -89,12 +89,17 @@ ${voffset 2}${color1} 9${goto 45}${color3}${cpu cpu9}%${goto 85}${color2}${cpuba
 ${voffset 2}${color1}11${goto 45}${color3}${cpu cpu11}%${goto 85}${color2}${cpubar cpu11 13, 60}${goto 170}${color1}12${goto 195}${color3}${cpu cpu12}%${goto 235}${color2}${cpubar cpu12 13, 60}
 ${voffset 2}${color1}13${goto 45}${color3}${cpu cpu13}%${goto 85}${color2}${cpubar cpu13 13, 60}${goto 170}${color1}14${goto 195}${color3}${cpu cpu14}%${goto 235}${color2}${cpubar cpu14 13, 60}
 ${voffset 2}${color1}15${goto 45}${color3}${cpu cpu15}%${goto 85}${color2}${cpubar cpu15 13, 60}${goto 170}${color1}16${goto 195}${color3}${cpu cpu16}%${goto 235}${color2}${cpubar cpu16 13, 60}
+${voffset 2}${color1}17${goto 45}${color3}${cpu cpu17}%${goto 85}${color2}${cpubar cpu17 13, 60}${goto 170}${color1}18${goto 195}${color3}${cpu cpu18}%${goto 235}${color2}${cpubar cpu18 13, 60}
+${voffset 2}${color1}19${goto 45}${color3}${cpu cpu19}%${goto 85}${color2}${cpubar cpu19 13, 60}${goto 170}${color1}20${goto 195}${color3}${cpu cpu20}%${goto 235}${color2}${cpubar cpu20 13, 60}
+${voffset 2}${color1}21${goto 45}${color3}${cpu cpu21}%${goto 85}${color2}${cpubar cpu21 13, 60}${goto 170}${color1}22${goto 195}${color3}${cpu cpu22}%${goto 235}${color2}${cpubar cpu22 13, 60}
+${voffset 2}${color1}23${goto 45}${color3}${cpu cpu23}%${goto 85}${color2}${cpubar cpu23 13, 60}${goto 170}${color1}24${goto 195}${color3}${cpu cpu24}%${goto 235}${color2}${cpubar cpu24 13, 60}
 #------------+
 #TEMPS
 #------------+
 ${voffset 10}${color1}${font :size=14:bold}TEMPS ${hr 2}${font}
-${voffset 5}${color1}CPU : ${color3}${execi 5 sensors | grep Tdie: | cut -c 16-19}°C$alignr${color1}NVME : ${color3}${execi 5 nvme smart-log /dev/nvme0n1 | grep '^temperature' | cut -d ":" -f 2 | cut -d " " -f 2}°C
-${voffset 2}${color1}GPU : ${color3}${nvidia temp}°C$alignr${color1}HDD :${color3}${execi 5 hddtemp /dev/sda1 | cut -d ":" -f 3}
+${voffset 5}${color1}CPU : ${color3}${execi 5 sensors | grep Tctl: | cut -c 16-19}°C$alignr${color1}NVME : ${color3}${execi 5 sensors | grep Composite: | cut -c 16-19}°C
+${voffset 5}${color1}iGPU : ${color3}${execi 5 sensors | grep edge: | cut -c 16-19}°C$alignr${color1}
+#${voffset 2}${color1}GPU : ${color3}${nvidia temp}°C$alignr${color1}HDD :${color3}${execi 5 hddtemp /dev/sda1 | cut -d ":" -f 3}
 #------------+
 # PROCESSES
 #------------+
