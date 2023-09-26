@@ -102,7 +102,7 @@ ${color1}Driver :$alignr${color3}${execi 6000 nvidia-smi --query-gpu=driver_vers
 ${color1}Utilization :$alignr${color3}${exec nvidia-smi -i 0 | grep % | cut -c 61-63} %
 ${color1}VRAM Utilization :$alignr${color3}${exec nvidia-smi -i 0| grep % | cut -c 37-40} MB
 ${nvidia modelname} usage:$alignr${nvidia gpuutil}%
-${nvidiagraph gpuutil white white 0}
+${color2}${nvidiagraph gpuutil 70 white 0}
 #------------+
 #TEMPS
 #------------+
