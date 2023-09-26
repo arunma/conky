@@ -94,12 +94,22 @@ ${voffset 2}${color1}19${goto 45}${color3}${cpu cpu19}%${goto 85}${color2}${cpub
 ${voffset 2}${color1}21${goto 45}${color3}${cpu cpu21}%${goto 85}${color2}${cpubar cpu21 13, 60}${goto 170}${color1}22${goto 195}${color3}${cpu cpu22}%${goto 235}${color2}${cpubar cpu22 13, 60}
 ${voffset 2}${color1}23${goto 45}${color3}${cpu cpu23}%${goto 85}${color2}${cpubar cpu23 13, 60}${goto 170}${color1}24${goto 195}${color3}${cpu cpu24}%${goto 235}${color2}${cpubar cpu24 13, 60}
 #------------+
+# GPU
+#------------+
+${voffset 10}${color1}${font :size=14:bold}GPU ${hr 2}${font}
+${voffset 5}${color1}GPU :$alignr${color3}${execi 6000 nvidia-smi --query-gpu=gpu_name --format=csv,noheader,nounits}
+${color1}Driver :$alignr${color3}${execi 6000 nvidia-smi --query-gpu=driver_version --format=csv,noheader,nounits}
+${color1}Utilization :$alignr${color3}${exec nvidia-smi -i 0 | grep % | cut -c 61-63} %
+${color1}VRAM Utilization :$alignr${color3}${exec nvidia-smi -i 0| grep % | cut -c 37-40} MB
+${nvidia modelname} usage:$alignr${nvidia gpuutil}%
+${nvidiagraph gpuutil white white 0}
+#------------+
 #TEMPS
 #------------+
 ${voffset 10}${color1}${font :size=14:bold}TEMPS ${hr 2}${font}
 ${voffset 5}${color1}CPU : ${color3}${execi 5 sensors | grep Tctl: | cut -c 16-19}°C$alignr${color1}NVME : ${color3}${execi 5 sensors | grep Composite: | cut -c 16-19}°C
 ${voffset 5}${color1}iGPU : ${color3}${execi 5 sensors | grep edge: | cut -c 16-19}°C$alignr${color1}
-#${voffset 2}${color1}GPU : ${color3}${nvidia temp}°C$alignr${color1}HDD :${color3}${execi 5 hddtemp /dev/sda1 | cut -d ":" -f 3}
+${voffset 2}${color1}GPU : ${color3}${nvidia temp}°C$alignr${color1}HDD :${color3}${execi 5 hddtemp /dev/sda1 | cut -d ":" -f 3}
 #------------+
 # PROCESSES
 #------------+
@@ -123,14 +133,6 @@ ${top_mem name 3} ${goto 180}${top_mem mem 3}${alignr}${top_mem mem_res 3}
 ${top_mem name 4} ${goto 180}${top_mem mem 4}${alignr}${top_mem mem_res 4}
 ${top_mem name 5} ${goto 180}${top_mem mem 5}${alignr}${top_mem mem_res 5}
 #------------+
-# GPU
-#------------+
-${voffset 10}${color1}${font :size=14:bold}VIDEO ${hr 2}${font}
-${voffset 5}${color1}GPU :$alignr${color3}${execi 6000 nvidia-smi --query-gpu=gpu_name --format=csv,noheader,nounits}
-${color1}Driver :$alignr${color3}${execi 6000 nvidia-smi --query-gpu=driver_version --format=csv,noheader,nounits}
-${color1}Utilization :$alignr${color3}${exec nvidia-smi -i 0 | grep % | cut -c 61-63} %
-${color1}VRAM Utilization :$alignr${color3}${exec nvidia-smi -i 0| grep % | cut -c 37-40} MB
-#------------+
 # DISK
 #------------+
 ${voffset 10}${color1}${font :size=14:bold}DISK ${hr 2}${font}
@@ -141,16 +143,16 @@ ${color2}${fs_bar /}
 ${voffset 2}${color1}Read: ${color3}${diskio_read nvme0n1}${goto 200}${color1}Write:${goto 250}${color3}${diskio_write nvme0n1}
 ${color2}${diskiograph_read nvme0n1 40,130} ${alignr}${diskiograph_write nvme0n1 40,130}
 # HDD
-${voffset 7}${color1}HDD ${stippled_hr 3 3}
-${voffset 5}${color1}Used: ${color3}${fs_used /media/zkucis/HDD}${color1}${goto 200}Free:${goto 250}${color3}${fs_free /media/zkucis/HDD}
-${color2}${fs_bar /media/zkucis/HDD}
-${voffset 2}${color1}Read: ${color3}${diskio_read /dev/sda1}${goto 200}${color1}Write:${goto 250}${color3}${diskio_write /dev/sda1}
-${color2}${diskiograph_read /dev/sda1 40,130} ${alignr}${diskiograph_write /dev/sda1 40,130}
+# ${voffset 7}${color1}HDD ${stippled_hr 3 3}
+# ${voffset 5}${color1}Used: ${color3}${fs_used /media/zkucis/HDD}${color1}${goto 200}Free:${goto 250}${color3}${fs_free /media/zkucis/HDD}
+# ${color2}${fs_bar /media/zkucis/HDD}
+# ${voffset 2}${color1}Read: ${color3}${diskio_read /dev/sda1}${goto 200}${color1}Write:${goto 250}${color3}${diskio_write /dev/sda1}
+# ${color2}${diskiograph_read /dev/sda1 40,130} ${alignr}${diskiograph_write /dev/sda1 40,130}
 #------------+
 # NETWORK
 #------------+
 ${voffset 10}${color1}${font :size=14:bold}NETWORK ${hr 2}${font}
-${voffset 5}${color3}Up: ${upspeedf wlo1} KiB/s${alignr}Down: ${downspeedf wlo1} KiB/s
-${color2}${upspeedgraph wlo1 40,130 -l}$alignr${downspeedgraph wlo1 40, 130 -l}
+${voffset 5}${color3}Up: ${upspeedf wlp12s0} KiB/s${alignr}Down: ${downspeedf wlp12s0} KiB/s
+${color2}${upspeedgraph wlp12s0 40,130 -l}$alignr${downspeedgraph wlp12s0 40, 130 -l}
 #------------+
 ]]
